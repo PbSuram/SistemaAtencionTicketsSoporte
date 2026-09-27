@@ -7,16 +7,14 @@ import java.util.Queue;
 import java.util.Stack;
 
 /**
- * Contiene toda la lógica del sistema de tickets y coordina
- * el uso de las distintas estructuras de datos:
- *
- *  - ArrayList : historial completo de todos los tickets registrados.
- *  - HashMap   : búsqueda rápida de un ticket a partir de su código.
- *  - Queue     : tickets pendientes, respetando el orden de llegada (FIFO).
- *  - Stack     : últimos tickets atendidos (LIFO).
- *  - ListaEnlazada (dentro de cada Ticket): historial de estados.
- */
+Contiene toda la lógica del sistema de tickets y coordina el uso de las distintas estructuras de datos:
 
+- ArrayList : historial completo de todos los tickets registrados.
+- HashMap   : búsqueda rápida de un ticket a partir de su código.
+- Queue     : tickets pendientes, respetando el orden de llegada (FIFO).
+- Stack     : últimos tickets atendidos (LIFO).
+- ListaEnlazada (dentro de cada Ticket): historial de estados.
+*/
 
 public class SistemaTickets {
     private ArrayList<Ticket> todosLosTickets;
@@ -30,10 +28,8 @@ public class SistemaTickets {
         ticketsPendientes = new LinkedList<>();
         ticketsAtendidos = new Stack<>();
     }
-
-    /**
-     * Registra un ticket nuevo. Devuelve false si el código ya existe.
-     */
+    
+    //Registra un ticket nuevo. Devuelve false si el código ya existe.
     public boolean registrarTicket(int codigo, String usuario, String problema) {
         if (ticketsPorCodigo.containsKey(codigo)) {
             return false;
@@ -58,11 +54,9 @@ public class SistemaTickets {
         }
     }
 
-    /**
-     * Toma el primer ticket de la cola, lo pasa a EN PROCESO
-     * y lo apila como el más reciente atendido.
-     * Devuelve null si no hay tickets pendientes.
-     */
+    
+    // Toma el primer ticket de la cola, lo pasa a EN PROCESO y lo apila como el más reciente atendido.
+    // Devuelve null si no hay tickets pendientes.
     public Ticket atenderSiguiente() {
         if (ticketsPendientes.isEmpty()) {
             return null;
@@ -78,10 +72,8 @@ public class SistemaTickets {
         return ticketsPorCodigo.get(codigo);
     }
 
-    /**
-     * Intenta resolver un ticket. Devuelve un código de resultado
-     * para que la capa de menú (Main) decida qué mensaje mostrar.
-     */
+    
+    // Intenta resolver un ticket. Devuelve un código de resultado para que la capa de menú (Main) decida qué mensaje mostrar.
     public ResultadoResolucion resolverTicket(int codigo) {
         Ticket ticket = ticketsPorCodigo.get(codigo);
 
@@ -111,10 +103,7 @@ public class SistemaTickets {
         ticket.getHistorialEstados().mostrar();
     }
 
-    /**
-     * Muestra los tickets atendidos comenzando por el más reciente,
-     * usando la pila sin vaciarla (solo la recorre).
-     */
+    //Muestra los tickets atendidos comenzando por el más reciente, usando la pila sin vaciarla (solo la recorre).
     public void mostrarUltimosAtendidos() {
         if (ticketsAtendidos.isEmpty()) {
             System.out.println("Aún no se ha atendido ningún ticket.");
@@ -139,9 +128,7 @@ public class SistemaTickets {
         }
     }
 
-    /**
-     * Posibles resultados al intentar resolver un ticket.
-     */
+    // Posibles resultados al intentar resolver un ticket.    
     public enum ResultadoResolucion {
         NO_ENCONTRADO,
         AUN_PENDIENTE,
